@@ -14,3 +14,6 @@ Image 'countries':
 ```docker build -t countries -f src/main/resources/apis/docker-countries/Dockerfile .```
 
 ```docker run -p 8085:8080 countries```
+
+## Available endpoints:
+````/airportcountrysummary```
