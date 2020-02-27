@@ -1,23 +1,18 @@
 package com.assignment.lunatech.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.HashMap;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EnrichedCountry {
 
-    private String country_name;
-    private String country_id;
-    private HashMap<String, Airport> airports_map; //key: country_id ; value: airport;
+    private String name;
+    private String ident;
+    private HashMap<String, Airport> airports_map; //<ident country, airport>>
 
-    public EnrichedCountry (String country_id, String country_name) {
-        this.country_id = country_id;
-        this.country_name = country_name;
-    }
-
-    public void setCountry_name(String country_name) {
-        this.country_name = country_name;
-    }
-
-    public void setCountry_id(String country_id) {
-        this.country_id = country_id;
+    public EnrichedCountry (String ident, String name) {
+        this.ident = ident;
+        this.name = name;
     }
 }

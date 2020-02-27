@@ -19,14 +19,6 @@ public class Country {
         return this.name;
     }
 
-    public String countriesToString(Country[] countries) {
-        String list = "";
-        for(Country country : countries){
-            list += country.getName() + " \n";
-        }
-        return list;
-    }
-
     @Override
     public String toString() {
         return "Country:" + getName() + " (code: " + getCode();

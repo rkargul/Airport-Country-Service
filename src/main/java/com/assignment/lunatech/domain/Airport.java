@@ -7,8 +7,8 @@ public class Airport {
 
     private String ident;
     private String name;
-    private String[] runways;
-    private int runwaysCount;
+    private String iso_country;
+    private Runway[] runways;
 
     public String getIdent() {
         return ident;
@@ -16,30 +16,5 @@ public class Airport {
 
     public String getName() {
         return name;
-    }
-
-    public String[] getRunways() {
-        return runways;
-    }
-
-    public int getRunwaysCount() {
-        int count = 0;
-        for(String runway : runways) {
-            count++;
-        }
-        return count;
-    }
-
-    public String airportsToString(Airport[] airports) {
-        String list = "";
-        for(Airport air : airports){
-            list += air.getName() + " \n";
-        }
-        return list;
-    }
-
-    @Override
-    public String toString() {
-        return "Name: " + getName() + ", ident: " + getIdent();
     }
 }
