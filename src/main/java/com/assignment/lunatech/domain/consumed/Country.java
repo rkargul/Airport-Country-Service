@@ -1,4 +1,4 @@
-package com.assignment.lunatech.domain;
+package com.assignment.lunatech.domain.consumed;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

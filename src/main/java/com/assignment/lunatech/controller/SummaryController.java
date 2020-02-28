@@ -1,47 +1,49 @@
 package com.assignment.lunatech.controller;
 
-import com.assignment.lunatech.domain.Airport;
-import com.assignment.lunatech.domain.Country;
-import com.assignment.lunatech.domain.EnrichedCountry;
+import com.assignment.lunatech.domain.consumed.Country;
+import com.assignment.lunatech.domain.served.CountryServed;
+import com.assignment.lunatech.domain.served.SummaryResponse;
 import com.assignment.lunatech.services.AirportService;
 import com.assignment.lunatech.services.CountryService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/countryairportsummary")
 public class SummaryController {
+    private static final Logger log = LoggerFactory.getLogger(SummaryController.class);
+    private final CountryService countryService;
+    private final AirportService airportService;
 
-    @Autowired
-    private CountryService countryService;
-    @Autowired
-    private AirportService airportService;
-
-    @GetMapping("")
-    public Country[] displayAllCountries() {
-        return countryService.getAllCountries();
+    public SummaryController(CountryService countryService, AirportService airportService) {
+        this.countryService = countryService;
+        this.airportService = airportService;
     }
 
-    @GetMapping("/search/{countryID}")
-    public Airport[] displayAirportsInCountry(@PathVariable String countryID) {
-        return airportService.getAirportsPerCountry(countryID);
-    }
-
-    @GetMapping("/all")
-    public Airport[] displayAllAirports() {
-        return airportService.getAllAirports();
-    }
-
-    @GetMapping("/allcountries")
-    public EnrichedCountry[] enrichedCountriesWithOneOrMore() {
-        Country[] countries = countryService.getAllCountries();
-        EnrichedCountry[] enrichedCountries1 = new EnrichedCountry[countries.length];
-        for(int i = 0; i < countries.length; i++) {
-            enrichedCountries1[i] = new EnrichedCountry(countries[i].getCode(), countries[i].getName());
+    @GetMapping()
+    public SummaryResponse allCountriesServed(@RequestParam(value = "runways", defaultValue = "0") int runwayCount) {
+        if (runwayCount < 0) {
+            return new SummaryResponse(403, "Runways cannot be less than 0", null);
         }
-        return enrichedCountries1;
+        List<Country> countries = countryService.getAllCountries();
+
+        List<CountryServed> countriesServed_list = countries
+                .stream()
+                .map(one -> new CountryServed(
+                                one.getCode(),
+                                one.getName(),
+                                airportService.mapToServe(
+                                        airportService.getAirportsPerCountry(one.getCode()), runwayCount)
+                        )
+                )
+                .filter(one -> one.getAirports().size() > 0)
+                .collect(Collectors.toList());
+
+        return new SummaryResponse(200, null, countriesServed_list);
     }
+
 }
