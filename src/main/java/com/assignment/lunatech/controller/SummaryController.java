@@ -1,6 +1,5 @@
 package com.assignment.lunatech.controller;
 
-import com.assignment.lunatech.domain.consumed.Country;
 import com.assignment.lunatech.domain.served.CountryServed;
 import com.assignment.lunatech.domain.served.SummaryResponse;
 import com.assignment.lunatech.services.AirportService;
@@ -15,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/countryairportsummary")
+@RequestMapping()
 public class SummaryController {
     private static final Logger log = LoggerFactory.getLogger(SummaryController.class);
     private final CountryService countryService;
@@ -30,6 +29,11 @@ public class SummaryController {
     }
 
     @GetMapping()
+    public SummaryResponse noMapping() {
+        return new SummaryResponse(200, "Use /countryairportsummary", null);
+    }
+
+    @GetMapping("/countryairportsummary")
     public SummaryResponse allCountriesServed(@RequestParam(value = "runways", defaultValue = "0") int runwayCount) {
         if (runwayCount < 0) {
             return new SummaryResponse(403, "Runways cannot be less than 0", null);

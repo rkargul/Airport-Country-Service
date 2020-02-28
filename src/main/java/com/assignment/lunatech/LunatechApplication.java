@@ -32,7 +32,7 @@ public class LunatechApplication {
 
     @PostConstruct
     public void loadCountries() {
-//        log.info("{}", served);
+        log.info("Loading countries...");
         countryService.getAllCountries()
                 .stream()
                 .map(one -> new CountryServed(
@@ -44,5 +44,6 @@ public class LunatechApplication {
                 )
                 .filter(one -> one.getAirports().size() > 0)
                 .forEach(item -> served.put(item.getId(), item));
+        log.info("Countries loaded!");
     }
 }
