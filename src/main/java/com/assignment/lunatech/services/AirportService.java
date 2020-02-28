@@ -2,7 +2,6 @@ package com.assignment.lunatech.services;
 
 import com.assignment.lunatech.domain.consumed.Airport;
 import com.assignment.lunatech.domain.served.AirportServed;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
@@ -14,8 +13,11 @@ import java.util.stream.Collectors;
 @Service
 public class AirportService {
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+
+    public AirportService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public List<Airport> getAllAirports() {
         Airport[] airports = restTemplate.getForObject("http://192.168.99.100:8086/airports", Airport[].class);
