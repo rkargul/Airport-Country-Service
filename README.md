@@ -1,6 +1,9 @@
-# LunatechAssignment
+## Requirements:
+The application runs on Java 8.
 
-## Running Docker Images:
+## Running Docker Images [Windows 10]:
+
+Check Docker IP address: ````docker-machine ip```
 
 Image 'countries':
 
@@ -20,3 +23,8 @@ Image 'airports':
 ## Available endpoints:
 
 ```/airportcountrysummary```
+
+Query for minimumrunways:
+````/airportcountrysummary?query=```
+
+## 
