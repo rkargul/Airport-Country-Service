@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,9 +21,12 @@ public class SummaryController {
     private final CountryService countryService;
     private final AirportService airportService;
 
-    public SummaryController(CountryService countryService, AirportService airportService) {
+    private final HashMap<String, CountryServed> served;
+
+    public SummaryController(CountryService countryService, AirportService airportService, HashMap<String, CountryServed> served) {
         this.countryService = countryService;
         this.airportService = airportService;
+        this.served = served;
     }
 
     @GetMapping()
@@ -29,15 +34,16 @@ public class SummaryController {
         if (runwayCount < 0) {
             return new SummaryResponse(403, "Runways cannot be less than 0", null);
         }
-        List<Country> countries = countryService.getAllCountries();
+
+        List<CountryServed> countries = new ArrayList<>(served.values());
 
         List<CountryServed> countriesServed_list = countries
                 .stream()
                 .map(one -> new CountryServed(
-                                one.getCode(),
+                                one.getId(),
                                 one.getName(),
                                 airportService.mapToServe(
-                                        airportService.getAirportsPerCountry(one.getCode()), runwayCount)
+                                        airportService.getAirportsPerCountry(one.getId()), runwayCount)
                         )
                 )
                 .filter(one -> one.getAirports().size() > 0)
@@ -45,5 +51,4 @@ public class SummaryController {
 
         return new SummaryResponse(200, null, countriesServed_list);
     }
-
 }

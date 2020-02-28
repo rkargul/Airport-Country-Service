@@ -5,12 +5,12 @@ import java.util.List;
 public class SummaryResponse {
     private int code;
     private String message;
-    private List<CountryServed> countryServeds;
+    private List<CountryServed> countryServed;
 
-    public SummaryResponse(int code, String message, List<CountryServed> countryServeds) {
+    public SummaryResponse(int code, String message, List<CountryServed> countryServed) {
         this.code = code;
         this.message = message;
-        this.countryServeds = countryServeds;
+        this.countryServed = countryServed;
     }
 
     public int getCode() {
@@ -21,8 +21,8 @@ public class SummaryResponse {
         return message;
     }
 
-    public List<CountryServed> getCountryServeds() {
-        return countryServeds;
+    public List<CountryServed> getCountryServed() {
+        return countryServed;
     }
 
 }
