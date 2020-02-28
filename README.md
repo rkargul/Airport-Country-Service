@@ -25,6 +25,6 @@ Image 'airports':
 ```/airportcountrysummary```
 
 Query for minimumrunways:
-```/airportcountrysummary?query=```
+```/airportcountrysummary?runways=``` put a number of runways to filter on
 
 ## 
