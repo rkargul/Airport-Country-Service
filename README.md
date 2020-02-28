@@ -5,7 +5,7 @@ The application runs on Java 8.
 
 ## Running Docker Images [Windows 10]:
 
-Check Docker IP address: ````docker-machine ip```
+Check Docker IP address: ```docker-machine ip```
 
 Image 'countries':
 
