@@ -3,7 +3,7 @@
 ## Requirements:
 The application runs on Java 8.
 
-## Running Docker Images [Windows 10]:
+## Pre-requisites:
 
 Check Docker IP address: ```docker-machine ip```
 
